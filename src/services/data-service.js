@@ -103,7 +103,7 @@ export default class DataService {
       }
   ]
     const studentData = this.createStudentsFromRawData(data) 
-    return studentData.sort((s1, s2) => s1.name.localeCompare(s2.name));
+    return studentData
   }
 
   /**
@@ -115,6 +115,30 @@ export default class DataService {
         studentInfo.name, studentInfo.surname, studentInfo.yob, studentInfo.nationality, studentInfo.gender, studentInfo.marks
     ))
     return students
+  }
+
+  getStudentsByName(){
+    const data = this.getStudentsData()
+    const orderedData = [...data].sort((s1, s2) => s1.compareByName(s2))
+    return orderedData
+  }
+
+  getShuffledStudents() {
+    const data = this.getStudentsData()
+    const shuffledArray = this.shuffleArray(data)
+    return shuffledArray
+  }
+
+  shuffleArray(arrayToShuffle) {
+    const clonedArray = [...arrayToShuffle]
+    const newArray = []
+
+    while(clonedArray.length) {
+        const randomIndex = Math.round(Math.random() * (clonedArray.length -1))
+        const randomStudent = clonedArray.splice(randomIndex, 1)[0]
+        newArray.push(randomStudent)
+    }
+    return newArray
   }
   
 }

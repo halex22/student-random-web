@@ -3,9 +3,9 @@ import UColor from './libs/index.js'
 
 
 const randomColor = UColor.random()
-// const colorP = randomColor.getPalette()
-// console.log(colorP[0])
+const colorP = randomColor.getPalette()
+console.log(colorP)
 const b = document.getElementById('body-id')
 
 
-b.setAttribute("style", `background-color: ${randomColor.toRGB()}`)
+b.setAttribute("style", `background-color: ${colorP[0].toRGB()}`)

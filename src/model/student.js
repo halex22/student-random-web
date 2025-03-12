@@ -16,4 +16,8 @@ export default class Student {
     return undefined
   }
 
+  compareByName(secondStudent) {
+    return this.name.localeCompare(secondStudent.name)
+  }
+
 }
