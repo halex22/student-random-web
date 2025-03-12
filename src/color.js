@@ -3,6 +3,8 @@ import UColor from './libs/index.js'
 
 
 const randomColor = UColor.random()
+// const colorP = randomColor.getPalette()
+// console.log(colorP[0])
 const b = document.getElementById('body-id')
 
 

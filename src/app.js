@@ -1,6 +1,5 @@
 import DataService from "./services/data-service.js";
 import HtmlCreator from "./services/html-service.js";
-import { calculateAge } from "./services/misc.mjs";
 
 
 const service = new DataService()
@@ -19,7 +18,7 @@ function createStudentMarkDown (studentInfo) {
   const studentName = HtmlCreator.createSingleInfo('h3', `${studentInfo.name + ' ' +studentInfo.surname}`, ['student-name'])
 
   const studentInfoSpan = HtmlCreator.createSingleInfo('span', `nationality: ${studentInfo.nationality}`)
-  const studentAgeInfo = HtmlCreator.createSingleInfo('p', `Age: ${calculateAge(studentInfo.yob)}`)
+  const studentAgeInfo = HtmlCreator.createSingleInfo('p', `Age: ${studentInfo.age}`)
   const studentGender = HtmlCreator.createSingleInfo('p', `Gender: ${studentInfo.gender}`)
 
   wrapper.append(studentName, studentInfoSpan, studentGender, studentAgeInfo)

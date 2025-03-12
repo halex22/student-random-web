@@ -1,3 +1,5 @@
+import Student from "../model/student.js";
+
 export default class DataService {
   constructor() {}
 
@@ -100,7 +102,19 @@ export default class DataService {
           ]
       }
   ]
-    return data.sort((s1, s2) => s1.name.localeCompare(s2.name));
+    const studentData = this.createStudentsFromRawData(data) 
+    return studentData.sort((s1, s2) => s1.name.localeCompare(s2.name));
+  }
+
+  /**
+   * 
+   * @param {array} data 
+   */
+  createStudentsFromRawData(data) {
+    const students = data.map(studentInfo => new Student(
+        studentInfo.name, studentInfo.surname, studentInfo.yob, studentInfo.nationality, studentInfo.gender, studentInfo.marks
+    ))
+    return students
   }
   
 }
