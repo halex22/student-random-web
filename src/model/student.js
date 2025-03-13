@@ -20,4 +20,8 @@ export default class Student {
     return this.name.localeCompare(secondStudent.name)
   }
 
+  compareByAge(secondStudent) {
+    return this.age - secondStudent.age
+  }
+
 }

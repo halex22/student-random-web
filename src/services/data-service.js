@@ -1,109 +1,20 @@
 import Student from "../model/student.js";
 
+
 export default class DataService {
   constructor() {}
 
-  getStudentsData() {
-    const data = [
-      {
-          "name": "lorenzo",
-          "surname": "puppo",
-          "yob": 1995,
-          "nationality": "italy",
-          "gender": "m",
-          "marks": [
-              8,
-              9,
-              10
-          ]
-      },
-      {
-          "name": "jan",
-          "surname": "stigliani",
-          "yob": 2000,
-          "nationality": "italy",
-          "gender": "m",
-          "marks": [
-              7,
-              7,
-              8
-          ]
-      },
-      {
-          "name": "giovanni",
-          "surname": "sussarellu",
-          "yob": 1981,
-          "nationality": "italy",
-          "gender": "m",
-          "marks": [
-              7,
-              6,
-              8
-          ]
-      },
-      {
-          "name": "sara",
-          "surname": "de prà",
-          "yob": 1989,
-          "nationality": "italy",
-          "gender": "fluid",
-          "marks": [
-              9,
-              6,
-              8
-          ]
-      },
-      {
-          "name": "jeremias",
-          "surname": "cedeno",
-          "yob": 2003,
-          "nationality": "ecuador",
-          "gender": "m",
-          "marks": [
-              6,
-              10,
-              7
-          ]
-      },
-      {
-          "name": "laura",
-          "surname": "mazza",
-          "yob": 1984,
-          "nationality": "italy",
-          "gender": "f",
-          "marks": [
-              4,
-              2,
-              6
-          ]
-      },
-      {
-          "name": "eusebio",
-          "surname": "veizi",
-          "yob": 1993,
-          "nationality": "albanese",
-          "gender": "peanut",
-          "marks": [
-              5,
-              7,
-              6
-          ]
-      },
-      {
-          "name": "hugo",
-          "surname": "martinez",
-          "yob": 1994,
-          "nationality": "elSalvador",
-          "gender": "f",
-          "marks": [
-              10,
-              10,
-              8
-          ]
-      }
-  ]
-    const studentData = this.createStudentsFromRawData(data) 
-    return studentData
+
+   getStudentsData() {
+    const studentsPromise = fetch('/assets/students.json')
+    .then(res => res.json())
+    .then(data => {
+        console.log(this.createStudentsFromRawData(data))
+        return this.createStudentsFromRawData(data)
+    })
+    .catch(error => console.error(error))
+
+    return studentsPromise
   }
 
   /**
@@ -118,9 +29,16 @@ export default class DataService {
   }
 
   getStudentsByName(){
-    const data = this.getStudentsData()
-    const orderedData = [...data].sort((s1, s2) => s1.compareByName(s2))
-    return orderedData
+     return this.getStudentsData()
+     .then(students => {
+      return [...students].sort((s1, s2) => s1.compareByName(s2))
+     })
+  }
+
+
+  async getStudentsByAge() {
+    const data = await this.getStudentsData() 
+    return [...data].sort((s1, s2) => s1.compareByAge(s2))
   }
 
   getShuffledStudents() {

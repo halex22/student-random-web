@@ -4,18 +4,25 @@ import {HtmlCreator as MyJQuery} from "./services/html-service.js";
 
 const service = new DataService()
 const studentListContainer = document.getElementById('student-list')
-const studentsData = service.getShuffledStudents()
+// const studentsData = service.getShuffledStudents()
+
+function cleanUpRoot() {
+  studentListContainer.innerHTML = ''
+}
+
 
 function orderByName() {
-  // const studentData = service.getStudentsByName()
-  alert('I was clicked')
+  service.getStudentsByName().then(data => render(data))
 }
 
-function orderByAge() {}
-
-function shuffle() {
-  const studentData = service.shuffleArray()
+async function orderByAge() {
+  const data = await service.getStudentsByAge()
+  render(data)
 }
+
+// function shuffle() {
+//   const studentData = service.shuffleArray()
+// }
 
 
 function createStudentMarkDown (studentInfo) {
@@ -33,13 +40,25 @@ function createStudentMarkDown (studentInfo) {
   return wrapper
 }
 
-function render() {
-  studentsData.forEach(student => {
+
+function render(students) {
+  cleanUpRoot()
+  students.forEach(student => {
     studentListContainer.appendChild(createStudentMarkDown(student))
   })
 }
 
+function getStudents() {
+  const studentPromise = service.getStudentsData()
+  studentPromise
+  .then(studentData => render(studentData))
+}
 
-render()
+
+// render()
+
+// getStudents()
 
 window.orderByName = orderByName;
+window.getStudents = getStudents;
+window.orderByAge = orderByAge
